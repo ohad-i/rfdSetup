@@ -26,8 +26,8 @@ paramIdDict = {'FORMAT':0,
 
 
 parser = argparse.ArgumentParser(description='Config RFD modem')
-parser.add_argument('-p', '--port', default='/dev/ttyUSB0', help='RFD modem port')
-parser.add_argument('-b', '--baudRate', type=int, default=57600, help='Modem baud rate')
+parser.add_argument('-p', '--port', default='/dev/ttyUSB0', help='RFD modem port, default: /dev/ttyUSB0')
+parser.add_argument('-b', '--baudRate', type=int, default=57600, help='Modem baud rate, default: 57600 ')
 parser.add_argument('-n', '--netId', type=int, default=None, help='net id 0 - 99')
 parser.add_argument('-s', '--showSetup', action='store_true', help='Show modem setup')
 parser.add_argument('-a', '--attribute', default=None, help='Modem attribute to set (with value):\n %s'%(paramIdDict.keys()) )
@@ -43,9 +43,9 @@ ser = Serial(port, baud, timeout=1)
 
 confSucceed = False
 
-initial = 'A'
+initial = 'A' # for local modem configuration
 if args.configRemote:
-    initial = 'R'
+    initial = 'R' # for remote modem configuration (config over rf)
 
 
 
@@ -57,7 +57,7 @@ def send_at_command(command):
 def read_command_response():
     try:
         num = ser.inWaiting()
-        cnt = 500
+        cnt = 500 # max tries for receiving respnse 
         while num == 0:
             time.sleep(0.1)
             num = ser.inWaiting()
