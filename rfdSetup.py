@@ -67,7 +67,7 @@ def read_command_response():
                 break
         ret = ''
         while len(select([ser],[],[],0.1)[0]) > 0:
-            ret += ser.read().decode('utf8', errors='ignore').strip()
+            ret += ser.read().decode('utf8', errors='ignore')#.strip()
         
         #print(ret)
         #print("\n")
@@ -128,7 +128,6 @@ if __name__=="__main__":
             if ret==cmd:
                 send_at_command(cmd)
                 ret = read_command_response()
-
             print(ret)
 
         if args.readRSSI:
